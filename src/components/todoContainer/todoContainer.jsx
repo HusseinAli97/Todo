@@ -8,7 +8,7 @@ import darkIcon from '../../assets/img/icon-moon.svg'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { ToggleModeContext } from '../../context/ToggleMode'
 export default function TodoContainer() {
-    const API_URL = 'http://localhost:3500/todo'
+    const API_URL = 'https://fullstack-todolist-2god.onrender.com/todo'
     const [todos, setTodos] = useState([])
     const [todoItem, setTodoItem] = useState('')
     const [lastColorIndex, setLastColorIndex] = useState(0)
