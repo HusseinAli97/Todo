@@ -67,6 +67,7 @@ export default function TodoContainer() {
         try {
             await axios.delete(`${API_URL}/${id}`);
             setTodos((prev) => prev.filter((todo) => todo.id !== id));
+            setFilterTodos((prev) => prev.filter((todo) => todo.id !== id));
         } catch (error) {
             console.error(error);
         }
@@ -109,22 +110,15 @@ export default function TodoContainer() {
         }
     };
 
-    const clearCompletedTodos = useCallback(async () => {
-        try {
-            const completedTodoIds = todos
-                .filter((todo) => todo.completed)
-                .map((todo) => todo.id);
+    function clearCompletedTodos() {
+        const completedTodos = todos.filter((todo) => todo.completed);
+        completedTodos.forEach((todo) => {
+            axios.delete(`${API_URL}/${todo.id}`);
+        })
+        setTodos((prev) => prev.filter((todo) => !todo.completed));
+        setFilterTodos((prev) => prev.filter((todo) => !todo.completed));
 
-            for (const id of completedTodoIds) {
-                await axios.delete(`${API_URL}/${id}`);
-            }
-
-            setTodos((prevTodos) => prevTodos.filter((todo) => !todo.completed));
-            setShow('all');
-        } catch (error) {
-            console.error(error);
-        }
-    }, [todos]);
+    }
 
     return (
         <>
