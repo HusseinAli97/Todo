@@ -31,17 +31,17 @@ export default function TodoContainer() {
     async function addTodo(e) {
         e.preventDefault()
         if (!todoItem) return
-        let randomIndex;
-        do {
-            randomIndex = Math.floor(Math.random() * customColors.length);
-        } while (randomIndex === lastColorIndex);
+        // let randomIndex;
+        // do {
+        //     randomIndex = Math.floor(Math.random() * customColors.length);
+        // } while (randomIndex === lastColorIndex);
 
-        const selectedColor = customColors[randomIndex];
-        setLastColorIndex(randomIndex);
+        // const selectedColor = customColors[randomIndex];
+        // setLastColorIndex(randomIndex);
         let res = await axios.post(API_URL, {
             title: todoItem,
             completed: false,
-            bgcolor: selectedColor,
+            bgcolor:'linear-gradient(90deg,rgb(7, 66, 108) 0%,rgb(52, 140, 202) 100%)' ,
         })
         getTodos()
         setTodoItem('')
