@@ -45,8 +45,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [Github Repo](https://github.com/HusseinAli97/Todo)
-- Live Site URL: [Deployed on Railway](https://web-production-a84d.up.railway.app/)
-- Live Site URL: [Deployed on Heroku](https://todo-list-gbr.herokuapp.com)
+- Live Site URL: [Deployed on Railway](https://todolist-743d.onrender.com/)
 
 ## My process
 
