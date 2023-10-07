@@ -105,57 +105,63 @@ export default function TodoContainer() {
         }
     }
     return (
-        <Container className='' >
-            <Row className={`${styles.todoContainer}  m-auto pt-5`}>
-                <Col md={12} className='mb-5' >
-                    <div className={`${styles.header} d-flex justify-content-between align-items-center mb-3 `}>
-                        <h1 className={`${styles.title} title  text-light`}>TODO LIST</h1>
-                        <img src={mode === 'light' ? darkIcon : lightIcon} alt="" role='button' className={`${styles.icon} fluid `} onClick={() => {
-                            changeMode()
-                        }} />
-                    </div>
-                    <div className={`${styles.addInput} `}>
-                        <Form onSubmit={addTodo}>
-                            <InputGroup>
-                                <Form.Control
-                                    placeholder='Enter Your Todo'
-                                    value={todoItem}
-                                    className={`${styles.addInput}`}
-                                    onChange={(e) => setTodoItem(e.target.value)} />
-                            </InputGroup>
-                        </Form>
-                    </div>
-                </Col>
-                <Col md={12}>
-                    <div className="content position-relative">
-                        <DragDropContext onDragEnd={handeDragEnd}>
-                            <Droppable droppableId='todoList' >
-                                {provided => (
-                                    <div className={`${styles.todoBody} position-relative shadow-lg todoBody`} ref={provided.innerRef} {...provided.droppableProps}>
-                                        {
-                                            todos.map((todo, index) => (
-                                                <Items API_URL={API_URL} getTodos={getTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodos} completeTodo={completeTodo} />
-                                            ))
-                                        }
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
-                        </DragDropContext>
-                        <div className={`${styles.tabs} tabsFilter`}>
-                            <p className={`${styles.count} m-0`}>
-                                item: {todos.length}
-                            </p>
-                                    <Button onClick={() => setShow('all')} className={` navTabs bg-transparent border-0 ${show === 'all' ? 'primary-Color' : ''}`} >All</Button>
-                                    <Button onClick={() => setShow('active')} className={` navTabs bg-transparent border-0 ${show === 'active' ? 'primary-Color' : ''}  `}>Active</Button>
-                                    <Button onClick={() => setShow('completed')} className={` navTabs bg-transparent border-0 ${show === 'completed' ? 'primary-Color' : ''}  `}>Completed</Button>
-                            <p className={`${styles.count} m-0`} onClick={delCompletedTodos}>
-                                ClearCompleted
-                            </p>
+        <>
+            <Container className='' >
+                <Row className={`${styles.todoContainer}  m-auto pt-5`}>
+                    <Col md={12} className='mb-5' >
+                        <div className={`${styles.header} d-flex justify-content-between align-items-center mb-3 `}>
+                            <h1 className={`${styles.title} title  text-light`}>TODO LIST</h1>
+                            <img src={mode === 'light' ? darkIcon : lightIcon} alt="" role='button' className={`${styles.icon} fluid `} onClick={() => {
+                                changeMode()
+                            }} />
                         </div>
-                    </div>
-                </Col>
-            </Row>
-        </Container>
+                        <div className={`${styles.addInput} `}>
+                            <Form onSubmit={addTodo}>
+                                <InputGroup>
+                                    <Form.Control
+                                        placeholder='Enter Your Todo'
+                                        value={todoItem}
+                                        className={`${styles.addInput}`}
+                                        onChange={(e) => setTodoItem(e.target.value)} />
+                                </InputGroup>
+                            </Form>
+                        </div>
+                    </Col>
+                    <Col md={12}>
+                        <div className="content position-relative">
+                            <DragDropContext onDragEnd={handeDragEnd}>
+                                <Droppable droppableId='todoList' >
+                                    {provided => (
+                                        <div className={`${styles.todoBody} position-relative shadow-lg todoBody`} ref={provided.innerRef} {...provided.droppableProps}>
+                                            {
+                                                todos.map((todo, index) => (
+                                                    <Items API_URL={API_URL} getTodos={getTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodos} completeTodo={completeTodo} />
+                                                ))
+                                            }
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </DragDropContext>
+                            <div className={`${styles.tabs} tabsFilter`}>
+                                <p className={`${styles.count} m-0`}>
+                                    item: {todos.length}
+                                </p>
+                                <Button onClick={() => setShow('all')} className={` navTabs bg-transparent border-0 ${show === 'all' ? 'primary-Color' : ''}`} >All</Button>
+                                <Button onClick={() => setShow('active')} className={` navTabs bg-transparent border-0 ${show === 'active' ? 'primary-Color' : ''}  `}>Active</Button>
+                                <Button onClick={() => setShow('completed')} className={` navTabs bg-transparent border-0 ${show === 'completed' ? 'primary-Color' : ''}  `}>Completed</Button>
+                                <p className={`${styles.count} m-0`} onClick={delCompletedTodos}>
+                                    ClearCompleted
+                                </p>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+                <small className='text-center text-white-50 position-absolute bottom-0 start-50 translate-middle'>
+                    Drag and drop items to reorder
+                </small>
+            </Container>
+        </>
+
     )
 }

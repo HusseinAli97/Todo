@@ -110,3 +110,12 @@ body:has(.lightMode) .navTabs:hover {
 .navTabs:hover {
     color: var(--primary-Color) !important;
 }
+@media (max-width: 450px) {
+    .tabsFilter {
+        flex-direction: column;
+        justify-content: start !important;
+        align-items: start !important;
+        text-align: start;
+        bottom: -180px !important;
+    }
+} 
