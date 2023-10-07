@@ -13,11 +13,12 @@ export default function Items({
     index,
     removeTodos,
     completeTodo,
+    setFilterTodos,
 }) {
     const [isEdit, setIsEdit] = useState(false);
     const [todoItemUpdate, setTodoItemUpdate] = useState(todo.title);
 
-    const handelEdit = useCallback(
+    const handelEdit = 
         async (e) => {
             e.preventDefault();
             setIsEdit(false);
@@ -30,12 +31,15 @@ export default function Items({
                         prevTodo.id === res.data.id ? res.data : prevTodo
                     )
                 );
+                setFilterTodos((prev) =>
+                    prev.map((prevTodo) =>
+                        prevTodo.id === res.data.id ? res.data : prevTodo
+                    )
+                );
             } catch (error) {
                 console.error(error);
             }
-        },
-        [API_URL, todo.id, todoItemUpdate, setTodos]
-    );
+        };
 
 
     return (

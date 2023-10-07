@@ -151,7 +151,7 @@ export default function TodoContainer() {
                                         <div className={`${styles.todoBody} position-relative shadow-lg todoBody`} ref={provided.innerRef} {...provided.droppableProps}>
                                             {
                                                 filterTodos.map((todo, index) => (
-                                                    <Items API_URL={API_URL} setTodos={setTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodo} completeTodo={completeTodo} />
+                                                    <Items setFilterTodos={setFilterTodos} API_URL={API_URL} setTodos={setTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodo} completeTodo={completeTodo} />
                                                 ))
                                             }
                                             {provided.placeholder}
