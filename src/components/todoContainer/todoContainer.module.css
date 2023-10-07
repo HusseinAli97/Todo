@@ -1,0 +1,38 @@
+.todoContainer{
+    max-width:700px;
+    position: relative;
+    top: 100px;
+}
+.header{
+    padding: 0 18px;
+}
+.title{
+    font-weight: 700;
+}
+.addInput{
+    background-color: var(--desaturated--Blue);
+    color: var(--Light-Grayish-Blue) !important;
+    border-color: var(--primary-Color) !important;
+    border-radius: 10px;
+}
+.addInput input{
+    padding: 12px 18px;
+    font-weight: bold;
+    letter-spacing: .045em;
+}
+::placeholder {
+    color: var(--Light-Grayish-Blue) !important;
+}
+.addInput:focus{
+    color: var(--Light-Grayish-Blue-hover);
+    background-color:var(--Dark-Grayish-Blue-hover) ;
+    border-color: transparent !important;
+}
+.todoBody{
+    background-color: var(--desaturated--Blue);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

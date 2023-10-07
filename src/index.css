@@ -1,13 +1,49 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
+
+:root {
+    --primary-Color: hsl(220, 98%, 61%);
+    --check-Background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
+    /* Dark */
+    --dark-Background: hsl(235, 21%, 11%);
+    --desaturated--Blue: hsl(235, 24%, 19%);
+    --Light-Grayish-Blue: hsl(234, 39%, 85%);
+    --Light-Grayish-Blue-hover: hsl(236, 33%, 92%);
+    --Dark-Grayish-Blue: hsl(234, 11%, 52%);
+    --Dark-Grayish-Blue: hsl(233, 14%, 35%);
+    --Dark-Grayish-Blue-hover: hsl(237, 14%, 26%);
+    /* Light */
+    --Very-Light-Gray: hsl(0, 0%, 98%);
+    --Very-Light-Grayish-Blue: hsl(236, 33%, 92%);
+    --Light-Grayish-Blue: hsl(233, 11%, 84%);
+    --Dark-Grayish-Blue: hsl(236, 9%, 61%);
+    --Very-Dark-Grayish-Blue: hsl(235, 19%, 35%);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+    Font-size: 18px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    background-color: var(--dark-Background) ;
+    height: 100vh;
+}
+.form-check-input {
+    --bs-form-check-bg: var(--bs-body-bg);
+    flex-shrink: 0;
+    width: 1.5em;
+    height: 1.5em;
+    margin: 0 1em 0 0;
+    padding:5px;
+    vertical-align: middle;
+    appearance: none;
+    background-color: var(--Dark-Grayish-Blue);
+    background-image: url('../src/assets/img/icon-check.svg') !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 50% !important;
+    -webkit-print-color-adjust: exact;
+}
+.form-check-input:checked{
+    background-color: var(--check-Background);
 }
