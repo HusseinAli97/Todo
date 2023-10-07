@@ -26,6 +26,9 @@ body {
     background-color: var(--dark-Background) ;
     height: 100vh;
 }
+.primary-Color{
+    color: var(--primary-Color);
+}
 .form-check-input {
     --bs-form-check-bg: var(--bs-body-bg);
     flex-shrink: 0;
@@ -35,15 +38,28 @@ body {
     padding:5px;
     vertical-align: middle;
     appearance: none;
-    background-color: var(--Dark-Grayish-Blue);
-    background-image: url('../src/assets/img/icon-check.svg') !important;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50%;
+    background-color: transparent;
     border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: 50% !important;
-    -webkit-print-color-adjust: exact;
+    transition: all 0.5s ease-in-out !important;
+    position: relative;
+    cursor: pointer;
 }
 .form-check-input:checked{
-    background-color: var(--check-Background);
+    background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+}
+.form-check-input:checked::after{
+    content: url('../src/assets/img/icon-check.svg');
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px;
+}
+.navTabs{
+    transition: all .5s ease-in-out;
+}
+.navTabs:hover{
+    color: var(--primary-Color) !important; ;
 }

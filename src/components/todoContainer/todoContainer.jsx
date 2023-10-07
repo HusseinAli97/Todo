@@ -1,15 +1,19 @@
-import { Button, Card, Col, Container, Form, FormCheck, InputGroup, Row } from 'react-bootstrap'
+import { Button, Card, Col, Container, Form, FormCheck, FormLabel, InputGroup, Nav, Row, Tab, Toast } from 'react-bootstrap'
 import Items from '../items/items'
 import styles from './todoContainer.module.css'
-import axios from 'axios'
+import axios, { all } from 'axios'
 import { useEffect, useState } from 'react'
 import lightIcon from '../../assets/img/icon-sun.svg'
 import darkIcon from '../../assets/img/icon-moon.svg'
+import FormCheckLabel from 'react-bootstrap/esm/FormCheckLabel'
+import FormCheckInput from 'react-bootstrap/esm/FormCheckInput'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 export default function TodoContainer() {
     const API_URL = 'http://localhost:3500/todo'
     const [todos, setTodos] = useState([])
     const [todoItem, setTodoItem] = useState('')
-
+    const [lastColorIndex, setLastColorIndex] = useState(0)
+    const [show, setShow] = useState('all')
     async function getTodos() {
         let res = await axios.get(API_URL)
         setTodos(res?.data)
@@ -17,17 +21,89 @@ export default function TodoContainer() {
     useEffect(() => {
         getTodos()
     }, []);
+    const customColors = [
+        'linear-gradient(90deg,rgb(7, 66, 108) 0%,rgb(52, 140, 202) 100%)',
+        'linear-gradient(90deg,rgba(93, 12, 255, 1) 0%,rgba(155, 0, 250, 1) 100%)',
+        'linear-gradient(90deg,rgba(255, 12, 241, 1) 0%,rgba(250, 0, 135, 1) 100%)',
+        'linear-gradient(90deg,rgba(20, 159, 255, 1) 0%,rgba(17, 122, 255, 1) 100%)',
+        'linear-gradient(90deg,rgba(255, 118, 20, 1) 0%,rgba(255, 84, 17, 1) 100%)',
+    ];
     async function addTodo(e) {
         e.preventDefault()
         if (!todoItem) return
-        let res = await axios.post(API_URL, { title: todoItem, completed: false })
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * customColors.length);
+        } while (randomIndex === lastColorIndex);
+
+        const selectedColor = customColors[randomIndex];
+        setLastColorIndex(randomIndex);
+        let res = await axios.post(API_URL, {
+            title: todoItem,
+            completed: false,
+            bgcolor: selectedColor,
+        })
         getTodos()
         setTodoItem('')
-        console.log(todoItem);
     }
     async function removeTodos(id) {
         let res = await axios.delete(`${API_URL}/${id}`)
         getTodos()
+    }
+    function handeDragEnd(result) {
+        const items = Array.from(todos);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+        setTodos(items);
+    }
+    async function handelShow() {
+        let res = await axios.get(API_URL)
+        if (show === 'all') {
+            setTodos(res?.data)
+        } else if (show === 'completed') {
+            setTodos(res?.data.filter((todo) => todo.completed))
+        } else if (show === 'active') {
+            setTodos(res?.data.filter((todo) => !todo.completed))
+        } else {
+            setTodos(res?.data)
+        }
+    }
+    useEffect(() => {
+        handelShow()
+    }, [show]);
+    async function completeTodo(isCompleted, id) {
+        try {
+            const updatedTodo = {
+                completed: isCompleted,
+            };
+            const res = await axios.patch(`${API_URL}/${id}`, updatedTodo);
+            setTodos((prevTodos) => {
+                return prevTodos.map((todo) => {
+                    if (todo.id === id) {
+                        return {
+                            ...todo,
+                            completed: isCompleted,
+                        };
+                    }
+                    return todo;
+                });
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async function delCompletedTodos() {
+        try {
+            const completedTodoIds = todos.filter((todo) => todo.completed).map((todo) => todo.id);
+            for (const id of completedTodoIds) {
+                await axios.delete(`${API_URL}/${id}`);
+            }
+            getTodos();
+            setShow('all');
+
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <Container className='' >
@@ -50,8 +126,32 @@ export default function TodoContainer() {
                     </div>
                 </Col>
                 <Col md={12}>
-                    <div className={`${styles.todoBody} `}>
-                    <Items />
+                    <div className="content position-relative">
+                        <DragDropContext onDragEnd={handeDragEnd}>
+                            <Droppable droppableId='todoList' >
+                                {provided => (
+                                    <div className={`${styles.todoBody} position-relative shadow-lg`} ref={provided.innerRef} {...provided.droppableProps}>
+                                        {
+                                            todos.map((todo, index) => (
+                                                <Items API_URL={API_URL} getTodos={getTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodos} completeTodo={completeTodo} />
+                                            ))
+                                        }
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        </DragDropContext>
+                        <div className={`${styles.tabs}`}>
+                            <p className={`${styles.count} m-0`}>
+                                item: {todos.length}
+                            </p>
+                                    <Button onClick={() => setShow('all')} className={` navTabs bg-transparent border-0 ${show === 'all' ? 'primary-Color' : ''} `} >All</Button>
+                                    <Button onClick={() => setShow('active')} className={` navTabs bg-transparent border-0 ${show === 'active' ? 'primary-Color' : ''} `}>Active</Button>
+                                    <Button onClick={() => setShow('completed')} className={` navTabs bg-transparent border-0 ${show === 'completed' ? 'primary-Color' : ''} `}>Completed</Button>
+                            <p className={`${styles.count} m-0`} onClick={delCompletedTodos}>
+                                ClearCompleted
+                            </p>
+                        </div>
                     </div>
                 </Col>
             </Row>
