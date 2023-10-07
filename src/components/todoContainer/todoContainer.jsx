@@ -2,18 +2,18 @@ import { Button, Card, Col, Container, Form, FormCheck, FormLabel, InputGroup, N
 import Items from '../items/items'
 import styles from './todoContainer.module.css'
 import axios, { all } from 'axios'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import lightIcon from '../../assets/img/icon-sun.svg'
 import darkIcon from '../../assets/img/icon-moon.svg'
-import FormCheckLabel from 'react-bootstrap/esm/FormCheckLabel'
-import FormCheckInput from 'react-bootstrap/esm/FormCheckInput'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { ToggleModeContext } from '../../context/ToggleMode'
 export default function TodoContainer() {
     const API_URL = 'http://localhost:3500/todo'
     const [todos, setTodos] = useState([])
     const [todoItem, setTodoItem] = useState('')
     const [lastColorIndex, setLastColorIndex] = useState(0)
     const [show, setShow] = useState('all')
+    const { mode, setMode, changeMode } = useContext(ToggleModeContext)
     async function getTodos() {
         let res = await axios.get(API_URL)
         setTodos(res?.data)
@@ -100,7 +100,6 @@ export default function TodoContainer() {
             }
             getTodos();
             setShow('all');
-
         } catch (error) {
             console.log(error);
         }
@@ -110,14 +109,16 @@ export default function TodoContainer() {
             <Row className={`${styles.todoContainer}  m-auto pt-5`}>
                 <Col md={12} className='mb-5' >
                     <div className={`${styles.header} d-flex justify-content-between align-items-center mb-3 `}>
-                        <h1 className={`${styles.title} text-light`}>TODO LIST</h1>
-                        <img src={lightIcon} alt="" className={`${styles.icon} fluid`} />
+                        <h1 className={`${styles.title} title  text-light`}>TODO LIST</h1>
+                        <img src={mode === 'light' ? darkIcon : lightIcon} alt="" role='button' className={`${styles.icon} fluid `} onClick={() => {
+                            changeMode()
+                        }} />
                     </div>
                     <div className={`${styles.addInput} `}>
                         <Form onSubmit={addTodo}>
                             <InputGroup>
                                 <Form.Control
-                                    placeholder='Add Todo'
+                                    placeholder='Enter Your Todo'
                                     value={todoItem}
                                     className={`${styles.addInput}`}
                                     onChange={(e) => setTodoItem(e.target.value)} />
@@ -130,7 +131,7 @@ export default function TodoContainer() {
                         <DragDropContext onDragEnd={handeDragEnd}>
                             <Droppable droppableId='todoList' >
                                 {provided => (
-                                    <div className={`${styles.todoBody} position-relative shadow-lg`} ref={provided.innerRef} {...provided.droppableProps}>
+                                    <div className={`${styles.todoBody} position-relative shadow-lg todoBody`} ref={provided.innerRef} {...provided.droppableProps}>
                                         {
                                             todos.map((todo, index) => (
                                                 <Items API_URL={API_URL} getTodos={getTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodos} completeTodo={completeTodo} />
@@ -141,13 +142,13 @@ export default function TodoContainer() {
                                 )}
                             </Droppable>
                         </DragDropContext>
-                        <div className={`${styles.tabs}`}>
+                        <div className={`${styles.tabs} tabsFilter`}>
                             <p className={`${styles.count} m-0`}>
                                 item: {todos.length}
                             </p>
-                                    <Button onClick={() => setShow('all')} className={` navTabs bg-transparent border-0 ${show === 'all' ? 'primary-Color' : ''} `} >All</Button>
-                                    <Button onClick={() => setShow('active')} className={` navTabs bg-transparent border-0 ${show === 'active' ? 'primary-Color' : ''} `}>Active</Button>
-                                    <Button onClick={() => setShow('completed')} className={` navTabs bg-transparent border-0 ${show === 'completed' ? 'primary-Color' : ''} `}>Completed</Button>
+                                    <Button onClick={() => setShow('all')} className={` navTabs bg-transparent border-0 ${show === 'all' ? 'primary-Color' : ''}`} >All</Button>
+                                    <Button onClick={() => setShow('active')} className={` navTabs bg-transparent border-0 ${show === 'active' ? 'primary-Color' : ''}  `}>Active</Button>
+                                    <Button onClick={() => setShow('completed')} className={` navTabs bg-transparent border-0 ${show === 'completed' ? 'primary-Color' : ''}  `}>Completed</Button>
                             <p className={`${styles.count} m-0`} onClick={delCompletedTodos}>
                                 ClearCompleted
                             </p>

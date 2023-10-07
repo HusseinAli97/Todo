@@ -13,8 +13,8 @@
     --Dark-Grayish-Blue-hover: hsl(237, 14%, 26%);
     /* Light */
     --Very-Light-Gray: hsl(0, 0%, 98%);
-    --Very-Light-Grayish-Blue: hsl(236, 33%, 92%);
-    --Light-Grayish-Blue: hsl(233, 11%, 84%);
+    --Very-Light-Grayish-Blue: hsl(235, 13%, 82%);
+    --Light-Grayish-Blue: hsl(235, 10%, 77%);
     --Dark-Grayish-Blue: hsl(236, 9%, 61%);
     --Very-Dark-Grayish-Blue: hsl(235, 19%, 35%);
 }
@@ -23,19 +23,61 @@ body {
     Font-size: 18px;
     font-family: 'Josefin Sans', sans-serif;
     font-weight: 400;
-    background-color: var(--dark-Background) ;
+    background-color: var(--dark-Background);
     height: 100vh;
 }
-.primary-Color{
-    color: var(--primary-Color);
+.primary-Color {
+    color: var(--primary-Color) !important;
 }
+
+body:has(.lightMode) {
+    background-color: var(--Very-Light-Gray);
+}
+body:has(.lightMode) .title {
+    color: var(--Very-Dark-Grayish-Blue) !important;
+}
+
+body:has(.lightMode) .form-control {
+    background-color: var(--Very-Light-Gray);
+    color: var(--Very-Dark-Grayish-Blue) !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+body:has(.lightMode) ::placeholder {
+    color: var(--Very-Dark-Grayish-Blue) !important;
+}
+
+body:has(.lightMode) .todoBody {
+    background-color: var(--Very-Light-Gray);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+body:has(.lightMode) .tabsFilter {
+    background-color: var(--Very-Light-Gray);
+    box-shadow: 2px 7px 14px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: aliceblue;
+
+}
+body:has(.lightMode) .navTabs {
+    color: var(--Very-Light-Grayish-Blue) !important;
+}
+body:has(.lightMode) .primary-Color  {
+    color: var(--primary-Color) !important;
+}
+body:has(.lightMode) .navTabs:hover {
+    color: var(--primary-Color) !important;
+}
+
+
+
+
 .form-check-input {
     --bs-form-check-bg: var(--bs-body-bg);
     flex-shrink: 0;
     width: 1.5em;
     height: 1.5em;
     margin: 0 1em 0 0;
-    padding:5px;
+    padding: 5px;
     vertical-align: middle;
     appearance: none;
     background-color: transparent;
@@ -45,10 +87,12 @@ body {
     position: relative;
     cursor: pointer;
 }
-.form-check-input:checked{
+
+.form-check-input:checked {
     background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 }
-.form-check-input:checked::after{
+
+.form-check-input:checked::after {
     content: url('../src/assets/img/icon-check.svg');
     position: absolute;
     top: 50%;
@@ -57,9 +101,12 @@ body {
     color: white;
     font-size: 20px;
 }
-.navTabs{
+
+.navTabs {
+    color: var(--Very-Dark-Grayish-Blue);
     transition: all .5s ease-in-out;
 }
-.navTabs:hover{
-    color: var(--primary-Color) !important; ;
+
+.navTabs:hover {
+    color: var(--primary-Color) !important;
 }

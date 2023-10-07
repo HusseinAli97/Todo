@@ -1,5 +1,14 @@
-.bgPhoto {
+.bgDarkPhoto {
     background-image: url('../../assets/img/bg-desktop-dark.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 30%;
+    width: 100%;
+    position: absolute;
+}
+.bgLightPhoto {
+    background-image: url('../../assets/img/bg-desktop-light.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

@@ -21,7 +21,7 @@ export default function Items({ API_URL,todo, getTodos,index, removeTodos, compl
             <Draggable key={todo.id} draggableId={todo.id.toString()} index={index} >
                 {(provided) => (
                     <div
-                        className={`${styles.todoItem} d-flex text-white align-items-center justify-content-between  `}
+                        className={`${styles.todoItem} todoItem d-flex text-white align-items-center justify-content-between `}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
