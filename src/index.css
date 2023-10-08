@@ -83,7 +83,6 @@ body:has(.lightMode) .navTabs:hover {
     background-color: transparent;
     border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: 50% !important;
-    transition: all 0.5s ease-in-out !important;
     position: relative;
     cursor: pointer;
 }

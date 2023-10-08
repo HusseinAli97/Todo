@@ -37,7 +37,7 @@ export default function TodoContainer() {
         'linear-gradient(90deg,rgba(20, 159, 255, 1) 0%,rgba(17, 122, 255, 1) 100%)',
         'linear-gradient(90deg,rgba(255, 118, 20, 1) 0%,rgba(255, 84, 17, 1) 100%)',
     ];
-    const addTodo = useCallback(async (e) => {
+    const addTodo = async (e) => {
         e.preventDefault();
         if (!todoItem) return;
 
@@ -55,13 +55,14 @@ export default function TodoContainer() {
                 completed: false,
                 bgcolor: selectedColor,
             });
-
             setTodos((prev) => [...prev, response?.data]);
+            setShow('active');
             setTodoItem('');
+
         } catch (error) {
             console.error(error);
         }
-    }, [lastColorIndex, todoItem]);
+    };
 
     const removeTodo = async (id) => {
         try {
@@ -93,22 +94,6 @@ export default function TodoContainer() {
             }
         }
     }, [show, todos])
-
-    const completeTodo = async (id) => {
-        try {
-            const todo = todos.find((todo) => todo.id === id);
-            await axios.patch(`${API_URL}/${id}`, {
-                completed: !todo.completed,
-            });
-            setTodos((prev) =>
-                prev.map((prevTodo) =>
-                    prevTodo.id === id ? { ...prevTodo, completed: !prevTodo.completed } : prevTodo
-                )
-            );
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     function clearCompletedTodos() {
         const completedTodos = todos.filter((todo) => todo.completed);
@@ -151,7 +136,7 @@ export default function TodoContainer() {
                                         <div className={`${styles.todoBody} position-relative shadow-lg todoBody`} ref={provided.innerRef} {...provided.droppableProps}>
                                             {
                                                 filterTodos.map((todo, index) => (
-                                                    <Items setFilterTodos={setFilterTodos} API_URL={API_URL} setTodos={setTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodo} completeTodo={completeTodo} />
+                                                    <Items setFilterTodos={setFilterTodos} API_URL={API_URL} setTodos={setTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodo}/>
                                                 ))
                                             }
                                             {provided.placeholder}

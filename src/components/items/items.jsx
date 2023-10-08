@@ -5,7 +5,6 @@ import styles from './items.module.css';
 import { Draggable } from 'react-beautiful-dnd';
 import FormCheckInput from 'react-bootstrap/esm/FormCheckInput';
 import FormCheckLabel from 'react-bootstrap/esm/FormCheckLabel';
-
 export default function Items({
     API_URL,
     todo,
@@ -17,7 +16,32 @@ export default function Items({
 }) {
     const [isEdit, setIsEdit] = useState(false);
     const [todoItemUpdate, setTodoItemUpdate] = useState(todo.title);
+    const [updating, setUpdating] = useState(false);
 
+    const handleComplete = async () => {
+        setIsEdit(false); // Disable editing immediately
+        setUpdating(true); // Indicate updating
+        try {
+            const res = await axios.patch(`${API_URL}/${todo.id}`, {
+                title: todoItemUpdate,
+                completed: !todo.completed, // Toggle completed state in the request
+            });
+            setTodos((prev) =>
+                prev.map((prevTodo) =>
+                    prevTodo.id === res.data.id ? res.data : prevTodo
+                )
+            );
+            setFilterTodos((prev) =>
+                prev.map((prevTodo) =>
+                    prevTodo.id === res.data.id ? res.data : prevTodo
+                )
+            );
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setUpdating(false);
+        }
+    };
     const handelEdit = 
         async (e) => {
             e.preventDefault();
@@ -41,7 +65,6 @@ export default function Items({
             }
         };
 
-
     return (
         <Draggable key={todo.id} draggableId={todo.id.toString()} index={index}>
             {(provided) => (
@@ -59,7 +82,8 @@ export default function Items({
                         <FormCheckInput
                             type='checkbox'
                             checked={todo.completed}
-                            onChange={() => completeTodo(todo.id)}
+                            onChange={handleComplete}
+                            disabled={updating} // Disable checkbox during update
                         />
                         <FormCheckLabel className='fw-bold text-capitalize'>
                             {isEdit ? (
