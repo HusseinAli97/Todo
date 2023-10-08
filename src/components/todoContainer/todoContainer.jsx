@@ -35,7 +35,9 @@ export default function TodoContainer() {
         'linear-gradient(90deg,rgba(93, 12, 255, 1) 0%,rgba(155, 0, 250, 1) 100%)',
         'linear-gradient(90deg,rgba(255, 12, 241, 1) 0%,rgba(250, 0, 135, 1) 100%)',
         'linear-gradient(90deg,rgba(20, 159, 255, 1) 0%,rgba(17, 122, 255, 1) 100%)',
-        'linear-gradient(90deg,rgba(255, 118, 20, 1) 0%,rgba(255, 84, 17, 1) 100%)',
+        'linear-gradient(90deg, rgba(93, 12, 255, 1) 0%, rgba(155, 0, 250, 1) 100%)',
+        'linear-gradient(90deg, #8A2BE2 0%, #FF69B4 100%)',
+        'linear-gradient(90deg, #000080 0%, #000000 100%)'
     ];
     const addTodo = async (e) => {
         e.preventDefault();
@@ -136,7 +138,7 @@ export default function TodoContainer() {
                                         <div className={`${styles.todoBody} position-relative shadow-lg todoBody`} ref={provided.innerRef} {...provided.droppableProps}>
                                             {
                                                 filterTodos.map((todo, index) => (
-                                                    <Items setFilterTodos={setFilterTodos} API_URL={API_URL} setTodos={setTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodo}/>
+                                                    <Items setFilterTodos={setFilterTodos} API_URL={API_URL} setTodos={setTodos} key={todo.id} todo={todo} index={index} removeTodos={removeTodo} />
                                                 ))
                                             }
                                             {provided.placeholder}
