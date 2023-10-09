@@ -109,7 +109,7 @@ export default function TodoContainer() {
 
     return (
         <>
-            <Container className='' >
+            <Container fluid className='mt-5' >
                 <Row className={`${styles.todoContainer}  m-auto pt-5`}>
                     <Col md={12} className='mb-5' >
                         <div className={`${styles.header} d-flex justify-content-between align-items-center mb-3 `}>
@@ -160,9 +160,13 @@ export default function TodoContainer() {
                         </div>
                     </Col>
                 </Row>
-                <small className='text-center text-white-50 position-absolute bottom-0 start-50 translate-middle'>
-                    Drag and drop items to reorder
-                </small>
+                <Row className='py-2 text-center'>
+                    <Col md={12}>
+                        <small className='text-center text-white-50 dragText'>
+                            Drag and drop items to reorder
+                        </small>
+                    </Col>
+                </Row>
             </Container>
         </>
 

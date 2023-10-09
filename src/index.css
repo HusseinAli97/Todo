@@ -20,12 +20,13 @@
 }
 
 body {
-    Font-size: 18px;
+    font-size: calc(13px + 0.390625vw);
     font-family: 'Josefin Sans', sans-serif;
     font-weight: 400;
     background-color: var(--dark-Background);
     height: 100vh;
 }
+
 .primary-Color {
     color: var(--primary-Color) !important;
 }
@@ -109,12 +110,28 @@ body:has(.lightMode) .navTabs:hover {
 .navTabs:hover {
     color: var(--primary-Color) !important;
 }
+.dragText {
+    position: relative;
+    top: 70px;
+    padding: 10px;
+}
 @media (max-width: 450px) {
     .tabsFilter {
-        flex-direction: column;
+        /* flex-direction: column;
         justify-content: start !important;
         align-items: start !important;
-        text-align: start;
-        bottom: -180px !important;
+        text-align: start; */
+        font-size: 12px;
+        position: fixed;
+        text-align: center;
+        bottom: -40px !important;
+        overflow-x: auto;
+    }
+    .navTabs{
+        font-size: 12px;
+        padding: 0 10px;
+    }
+    .dragText {
+        display: none;
     }
 } 

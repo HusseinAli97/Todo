@@ -5,6 +5,8 @@
     background-size: cover;
     height: 30%;
     width: 100%;
+    left: 0;
+    top: 0;
     position: absolute;
 }
 .bgLightPhoto {
